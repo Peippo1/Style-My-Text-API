@@ -1,6 +1,17 @@
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form, Request, Depends
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from fastapi.responses import JSONResponse
+from slowapi.errors import RateLimitExceeded
 
 app = FastAPI()
+
+# Create a limiter instance using IP address for client identity
+limiter = Limiter(key_func=get_remote_address)
+
+# Register the handler for rate limit errors
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 def apply_style(text: str, style: str) -> str:
     if style == "pirate":
@@ -22,6 +33,11 @@ def apply_style(text: str, style: str) -> str:
         return text
 
 @app.post("/style")
-async def style_text(text: str = Form(...), style: str = Form(...)):
+@limiter.limit("5/minute")
+async def style_text(
+    request: Request,
+    text: str = Form(...),
+    style: str = Form(...)
+):
     styled = apply_style(text, style)
     return {"styled_text": styled}

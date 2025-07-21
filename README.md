@@ -6,7 +6,7 @@
 [![Tests](https://github.com/Peippo1/Style-My-Text-API/actions/workflows/test.yml/badge.svg)](https://github.com/Peippo1/Style-My-Text-API/actions/workflows/test.yml)
 
 
-A playful FastAPI-powered microservice that transforms input text into various fun styles like **pirate**, **sarcastic**, and more.
+A playful FastAPI-powered microservice that transforms input text into various fun styles like **pirate**, **sarcastic**, and more — complete with a Streamlit frontend, CI testing, and rate limiting.
 
 ## ✨ Features
 
@@ -46,4 +46,12 @@ Example input:
 This project is open-sourced under the MIT License. See `LICENSE` for details.
 
 ---
-🧠 Built with FastAPI for fun and learning.
+## ✅ Final Features
+
+- FastAPI backend deployed on Render: [https://style-my-text-api.onrender.com](https://style-my-text-api.onrender.com)
+- Streamlit frontend for user interaction
+- GitHub Actions CI for automated testing
+- Rate limiting using `slowapi` to prevent spam
+
+---
+🧠 Built with FastAPI and Streamlit for fun, learning, and production-ready API practice.

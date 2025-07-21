@@ -17,4 +17,5 @@ def test_invalid_style_fallback():
     response = client.post("/style", data={"text": "test", "style": "nonexistent"})
     assert response.status_code == 200
     assert response.json()["styled_text"] == "test"
+
     
