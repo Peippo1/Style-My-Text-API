@@ -1,2 +1,10 @@
-fastapi==0.111.0
-uvicorn==0.29.0
+# App dependencies
+fastapi==0.116.1
+uvicorn==0.35.0
+streamlit==1.47.0
+requests==2.32.4
+python-multipart
+
+# Dev & Testing
+pytest
+httpx

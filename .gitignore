@@ -11,3 +11,7 @@ __pycache__/
 
 # macOS system files
 .DS_Store
+
+# pytest
+.pytest_cache/
+.coverage
