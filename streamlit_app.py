@@ -1,5 +1,8 @@
 import streamlit as st
 import requests
+import os
+
+# You can set DEBUG_MODE environment variable to "true" to show connection info
 
 # Initialize 'dark_mode' in session state if it doesn't exist
 if "dark_mode" not in st.session_state:
@@ -22,7 +25,11 @@ if dark_toggle:
     )
 
 # API endpoint constant for styling service
-API_URL = "http://localhost:8000/style"
+API_URL = os.getenv("API_URL", "http://localhost:8000/style")
+
+# Optionally show the API URL in debug mode
+if os.getenv("DEBUG_MODE") == "true":
+    st.markdown(f"*Using API URL: `{API_URL}`*")
 
 # Configure the Streamlit page with a title and icon
 st.set_page_config(page_title="Style My Text", page_icon="🎨")
@@ -54,26 +61,30 @@ style = st.selectbox(
 # When the "Style it!" button is pressed and input text is provided
 if st.button("Style it!") and text_input:
     with st.spinner("Styling..."):
-        # Send POST request to the API with text and selected style
-        response = requests.post(
-            API_URL,
-            data={"text": text_input, "style": style}
-        )
-        # If the API call is successful, display styled text and update history
-        if response.ok:
-            styled = response.json()["styled_text"]
-            st.success("Here's your styled text:")
-            st.code(styled, language="markdown")
+        try:
+            response = requests.post(
+                API_URL,
+                data={"text": text_input, "style": style}
+            )
+            # If the API call is successful, display styled text and update history
+            if response.ok:
+                styled = response.json()["styled_text"]
+                st.success("Here's your styled text:")
+                st.code(styled, language="markdown")
 
-            # Initialize history list in session state if not present
-            if "history" not in st.session_state:
-                st.session_state.history = []
+                # Initialize history list in session state if not present
+                if "history" not in st.session_state:
+                    st.session_state.history = []
 
-            # Append the current input, style, and output to history
-            st.session_state.history.append((text_input, style, styled))
-        else:
-            # Show error message if API call fails
-            st.error(f"Oops, something went wrong!\n{response.text}")
+                # Append the current input, style, and output to history
+                st.session_state.history.append((text_input, style, styled))
+            else:
+                # Show error message if API call fails
+                st.error(f"Oops, something went wrong!\nStatus code: {response.status_code}")
+                st.error(f"Oops, something went wrong!\n{response.text}")
+        except requests.exceptions.RequestException as e:
+            st.error(f"Could not connect to the styling service at {API_URL}. Please ensure the backend is running or set the API_URL environment variable correctly.")
+            return
 
 # Button to clear the app (rerun script)
 if st.button("Clear"):
