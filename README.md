@@ -1,11 +1,9 @@
-
-# Style My Text API
-
 # Style My Text API
 
 [![Python](https://img.shields.io/badge/python-3.11-blue)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.111.0-green)](https://fastapi.tiangolo.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Tests](https://github.com/Peippo1/Style-My-Text-API/actions/workflows/test.yml/badge.svg)](https://github.com/Peippo1/Style-My-Text-API/actions/workflows/test.yml)
 
 
 A playful FastAPI-powered microservice that transforms input text into various fun styles like **pirate**, **sarcastic**, and more.
