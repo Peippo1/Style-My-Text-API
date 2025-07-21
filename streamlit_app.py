@@ -88,7 +88,7 @@ if st.button("Style it!") and text_input:
 
 # Button to clear the app (rerun script)
 if st.button("Clear"):
-    st.experimental_rerun()
+    st.rerun()
 
 # Display the last 5 styling history entries if available
 if st.session_state.get("history"):
