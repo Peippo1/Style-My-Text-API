@@ -84,7 +84,7 @@ if st.button("Style it!") and text_input:
                 st.error(f"Oops, something went wrong!\n{response.text}")
         except requests.exceptions.RequestException as e:
             st.error(f"Could not connect to the styling service at {API_URL}. Please ensure the backend is running or set the API_URL environment variable correctly.")
-            return
+            # return removed (was outside a function)
 
 # Button to clear the app (rerun script)
 if st.button("Clear"):
